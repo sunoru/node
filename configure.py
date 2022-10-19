@@ -1235,7 +1235,8 @@ def configure_node(o):
   o['variables']['want_separate_host_toolset'] = int(cross_compiling)
 
   # Enable branch protection for arm64
-  if target_arch == 'arm64':
+  # Cross-compiling on non-arm64 host platforms does not support branch protection.
+  if target_arch == 'arm64' and host_arch == 'arm64':
     o['cflags']+=['-msign-return-address=all']
 
   if options.node_snapshot_main is not None:
